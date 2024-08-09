@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent {label 'docker'}
     parameters {
         choice choices: ['dev', 'prod', 'nginx'], name: 'environment'
     }
