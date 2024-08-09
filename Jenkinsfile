@@ -30,8 +30,11 @@ pipeline {
         }
         stage('cd') {
             steps {
-                sh 'docker compose -f docker-compose.yml -f docker-compose-${params.environment}.yml down'
-                sh 'docker compose -f docker-compose.yml -f docker-compose-${params.environment}.yml up -d --build'
+                // Explicitly use bash
+            sh '''
+                docker compose -f docker-compose.yml -f docker-compose-${params.environment}.yml down --remove-orphans
+                docker compose -f docker-compose.yml -f docker-compose-${params.environment}.yml up -d --build
+            '''
             }
         } 
     }
