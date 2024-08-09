@@ -38,11 +38,11 @@ pipeline {
      post {
             success {
                 // One or more steps need to be included within each condition's block.
-                salckSend(channel:"depi", color:'#00FF00',message: "Succeeded: Job '${env.JOB_NAME} ${env.BUILD_NUMBER}'")
+                slackSend(channel:"depi", color:'#00FF00',message: "Succeeded: Job '${env.JOB_NAME} ${env.BUILD_NUMBER}'")
             }
             failure {
                 // One or more steps need to be included within each condition's block.
-                 salckSend(channel:"depi", color:'#00FF00',message: "Failed: Job '${env.JOB_NAME} ${env.BUILD_NUMBER}'")
+                 slackSend(channel:"depi", color:'#00FF00',message: "Failed: Job '${env.JOB_NAME} ${env.BUILD_NUMBER}'")
             }
         }
 }
