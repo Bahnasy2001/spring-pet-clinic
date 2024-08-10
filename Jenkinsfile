@@ -31,7 +31,7 @@ pipeline {
         stage('cd') {
             steps {
                 // Explicitly use bash
-                sh 'echo ${params.environment}'
+                echo "Environment parameter: ${params.environment}"
                 // sh 'docker compose -f docker-compose.yml -f docker-compose-${params.environment}.yml down --remove-orphans'
                 // sh 'docker compose -f docker-compose.yml -f docker-compose-${params.environment}.yml up -d --build'
             
