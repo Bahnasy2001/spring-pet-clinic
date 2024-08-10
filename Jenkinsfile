@@ -32,8 +32,8 @@ pipeline {
             steps {
                 // Explicitly use bash
                 sh 'echo ${params.environment}'
-                sh 'docker compose -f docker-compose.yml -f docker-compose-${params.environment}.yml down --remove-orphans'
-                sh 'docker compose -f docker-compose.yml -f docker-compose-${params.environment}.yml up -d --build'
+                // sh 'docker compose -f docker-compose.yml -f docker-compose-${params.environment}.yml down --remove-orphans'
+                // sh 'docker compose -f docker-compose.yml -f docker-compose-${params.environment}.yml up -d --build'
             
             }
         } 
