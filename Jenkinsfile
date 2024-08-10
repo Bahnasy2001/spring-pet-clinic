@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent {label 'docker'}
     parameters {
         choice choices: ['dev', 'prod', 'nginx'], name: 'environment'
     }
@@ -13,28 +13,28 @@ pipeline {
                 )
             }
         }
-        stage('ci') {
-            steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                    // Build Docker image
-                    sh 'docker build . -t hassanbahnasy/spring-pet-clinic'
+        // stage('ci') {
+        //     steps {
+        //         withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+        //             // Build Docker image
+        //             sh 'docker build . -t hassanbahnasy/spring-pet-clinic'
                     
-                    // Log in to Docker Hub
-                    sh 'echo $PASSWORD | docker login -u $USERNAME --password-stdin'
+        //             // Log in to Docker Hub
+        //             sh 'echo $PASSWORD | docker login -u $USERNAME --password-stdin'
                     
-                    // Push Docker image to Docker Hub
-                    sh 'docker push hassanbahnasy/spring-pet-clinic'
-                }
-            }
+        //             // Push Docker image to Docker Hub
+        //             sh 'docker push hassanbahnasy/spring-pet-clinic'
+        //         }
+        //     }
             
-        }
+        // }
         stage('cd') {
             steps {
                 // Explicitly use bash
             sh '''
                 echo dev
-                docker compose -f docker-compose.yml -f docker-compose-dev.yml down --remove-orphans
-                docker compose -f docker-compose.yml -f docker-compose-dev.yml up -d --build
+                docker compose -f docker-compose.yml -f docker-compose-${params.environment}.yml down --remove-orphans
+                docker compose -f docker-compose.yml -f docker-compose-${params.environment}.yml up -d --build
             '''
             }
         } 
